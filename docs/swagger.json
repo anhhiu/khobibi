@@ -1,0 +1,624 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/customer/": {
+            "get": {
+                "description": "Retrieve a list of customers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customers"
+                ],
+                "summary": "Get all customers",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Customer"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "customers"
+                ],
+                "summary": "Create customer",
+                "parameters": [
+                    {
+                        "description": "customer data",
+                        "name": "customer",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Customer"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/customer/{customer_id}": {
+            "get": {
+                "tags": [
+                    "customers"
+                ],
+                "summary": "Get customer by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "tags": [
+                    "customers"
+                ],
+                "summary": "Update customer by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Customer info",
+                        "name": "customer",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Customer"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "tags": [
+                    "customers"
+                ],
+                "summary": "Delete customer by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/login/": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "login",
+                "parameters": [
+                    {
+                        "description": "Users data",
+                        "name": "users",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Users"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/order/": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get all orders",
+                "responses": {}
+            }
+        },
+        "/order/{order_id}": {
+            "get": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get order by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Order ID",
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Update order by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Order ID",
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Updated order data",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Delete order by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Order ID",
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/orderdetail/": {
+            "get": {
+                "tags": [
+                    "orderdetails"
+                ],
+                "summary": "Get all orderdetails",
+                "responses": {}
+            }
+        },
+        "/orderdetail/{order_detail_id}": {
+            "get": {
+                "description": "Retrieve a specific order detail by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orderdetails"
+                ],
+                "summary": "Get order_detail by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "OrderDetailID",
+                        "name": "order_detail_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/product/": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "Get all products",
+                "responses": {}
+            },
+            "post": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "Create product",
+                "parameters": [
+                    {
+                        "description": "Product data",
+                        "name": "product",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Product"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/product/{product_id}": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "Get product by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ProductID",
+                        "name": "product_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "Update product by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ProductID",
+                        "name": "product_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Products info",
+                        "name": "product",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Product"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "Delete product by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ProductID",
+                        "name": "product_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/register/": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "register",
+                "parameters": [
+                    {
+                        "description": "Users data",
+                        "name": "users",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Users"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/report/inventory": {
+            "get": {
+                "description": "Lấy báo cáo tồn kho",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "report"
+                ],
+                "summary": "Thống kê báo cáo tồn kho",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/report/order": {
+            "get": {
+                "description": "Lấy báo cáo đơn hàng: xử lý, đang chờ, và bị hủy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "report"
+                ],
+                "summary": "Thống kê đơn hàng",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/report/revenue": {
+            "get": {
+                "description": "Lấy báo cáo doanh thu theo tháng",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "report"
+                ],
+                "summary": "Thống kê doanh thu",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/supplier/": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "suppliers"
+                ],
+                "summary": "Get all suppliers",
+                "responses": {}
+            },
+            "post": {
+                "tags": [
+                    "suppliers"
+                ],
+                "summary": "Create supplier",
+                "parameters": [
+                    {
+                        "description": "Supplier data",
+                        "name": "supplier",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Supplier"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/supplier/{supplier_id}": {
+            "get": {
+                "tags": [
+                    "suppliers"
+                ],
+                "summary": "Get supplier by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Supplier ID",
+                        "name": "supplier_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "tags": [
+                    "suppliers"
+                ],
+                "summary": "Update supplier",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Supplier ID",
+                        "name": "supplier_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Supplier info",
+                        "name": "supplier",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Supplier"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "tags": [
+                    "suppliers"
+                ],
+                "summary": "Delete supplier",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Supplier ID",
+                        "name": "supplier_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/user/": {
+            "get": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Get all users",
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "models.Customer": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "customer_id": {
+                    "type": "integer"
+                },
+                "customer_name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Product": {
+            "type": "object",
+            "properties": {
+                "brand": {
+                    "type": "string"
+                },
+                "color": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "product_id": {
+                    "type": "integer"
+                },
+                "product_name": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "size": {
+                    "type": "string"
+                },
+                "supplier": {
+                    "$ref": "#/definitions/models.Supplier"
+                },
+                "supplier_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Supplier": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "supplier_id": {
+                    "type": "integer"
+                },
+                "supplier_name": {
+                    "type": "string"
+                },
+                "website": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Users": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
