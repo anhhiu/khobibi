@@ -162,8 +162,8 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Order ID",
-                        "name": "order_id",
+                        "description": "OrderID",
+                        "name": "orders_id",
                         "in": "path",
                         "required": true
                     }
