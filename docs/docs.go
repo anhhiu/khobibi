@@ -151,19 +151,62 @@ const docTemplate = `{
                 ],
                 "summary": "Get all orders",
                 "responses": {}
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Create order",
+                "parameters": [
+                    {
+                        "description": "Order data",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Order"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Order"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
             }
         },
         "/order/{order_id}": {
             "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "orders"
                 ],
-                "summary": "Get order by id",
+                "summary": "Get order by Id",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "OrderID",
-                        "name": "orders_id",
+                        "description": "Order ID",
+                        "name": "order_id",
                         "in": "path",
                         "required": true
                     }
@@ -427,6 +470,92 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/student/": {
+            "get": {
+                "tags": [
+                    "students"
+                ],
+                "summary": "get all students",
+                "responses": {}
+            },
+            "post": {
+                "tags": [
+                    "students"
+                ],
+                "summary": "create student",
+                "parameters": [
+                    {
+                        "description": "student data",
+                        "name": "student",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Students"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/student/{student_id}": {
+            "get": {
+                "tags": [
+                    "students"
+                ],
+                "summary": "get student by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "StudentID",
+                        "name": "student_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "tags": [
+                    "students"
+                ],
+                "summary": "update student",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "StudentID",
+                        "name": "student_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Student info",
+                        "name": "student",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Students"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "tags": [
+                    "students"
+                ],
+                "summary": "delete student",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "StudentID",
+                        "name": "student_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/supplier/": {
             "get": {
                 "consumes": [
@@ -553,6 +682,30 @@ const docTemplate = `{
                 }
             }
         },
+        "models.Order": {
+            "description": "Order model Order data structure",
+            "type": "object",
+            "properties": {
+                "customer": {
+                    "$ref": "#/definitions/models.Customer"
+                },
+                "customer_id": {
+                    "type": "integer"
+                },
+                "order_date": {
+                    "type": "string"
+                },
+                "order_id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "total_amount": {
+                    "type": "number"
+                }
+            }
+        },
         "models.Product": {
             "type": "object",
             "properties": {
@@ -588,6 +741,26 @@ const docTemplate = `{
                 },
                 "supplier_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "models.Students": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "age": {
+                    "type": "integer"
+                },
+                "class": {
+                    "type": "string"
+                },
+                "student_id": {
+                    "type": "integer"
+                },
+                "student_name": {
+                    "type": "string"
                 }
             }
         },

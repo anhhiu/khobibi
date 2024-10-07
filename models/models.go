@@ -43,6 +43,10 @@ type Product struct {
 
 	Supplier *Supplier `gorm:"foreignKey:SupplierID" json:"supplier"`
 }
+
+// @Description Order model
+// @Description Order data structure
+// @Model Order
 type Order struct {
 	OrderID     int       `gorm:"primaryKey;autoIncrement;column:order_id" json:"order_id"`
 	CustomerID  int       `gorm:"column:customer_id" json:"customer_id"`
@@ -72,6 +76,18 @@ type Users struct {
 	PassWord string `gorm:"column:password" json:"password"`
 }
 
+type Students struct {
+	StudentID int    `gorm:"primaryKey;autoInCrement;student_id" json:"student_id"`
+	Name      string `gorm:"size:50;column:student_name;" json:"student_name"`
+	Age       int    `gorm:"column:age" json:"age"`
+	Class     string `gorm:"size:50;column:class" json:"class"`
+	Address   string `gorm:"size:100;column:address" json:"address"`
+}
+
+type Class struct {
+	ClassID int `gorm:"primaryKey;autoInCerment;class_id" json:"class_id"`
+}
+
 func (user *Users) BeforeSave(tx *gorm.DB) (err error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.PassWord), bcrypt.DefaultCost)
 	if err != nil {
@@ -81,12 +97,13 @@ func (user *Users) BeforeSave(tx *gorm.DB) (err error) {
 	user.PassWord = string(hashedPassword)
 	return nil
 }
+
 // bao cao ton kho
 type InventoryReport struct {
-    TotalProducts   int     `json:"total_products"`
-    TotalQuantity   int     `json:"total_quantity"`
-    TotalValue      float64 `json:"total_value"`
-    LowStockProducts []Product `json:"low_stock_products"`
+	TotalProducts    int       `json:"total_products"`
+	TotalQuantity    int       `json:"total_quantity"`
+	TotalValue       float64   `json:"total_value"`
+	LowStockProducts []Product `json:"low_stock_products"`
 }
 
 // báo cáo doanh thu
@@ -94,15 +111,16 @@ type InventoryReport struct {
 // @Description Mô tả báo cáo doanh thu
 
 type RevenueReport struct {
-    Month   int     `json:"month"`   // Tháng (1-12)
-    Year    int     `json:"year"`    // Năm
-    Revenue float64 `json:"revenue"`  // Doanh thu
+	Month   int     `json:"month"`   // Tháng (1-12)
+	Year    int     `json:"year"`    // Năm
+	Revenue float64 `json:"revenue"` // Doanh thu
 }
+
 // OrderReport là struct mô tả báo cáo đơn hàng
 // @Description Mô tả báo cáo đơn hàng
 // bao cao don hang
 type OrderReport struct {
-    Status          string `json:"status"`          // Trạng thái đơn hàng
-    TotalOrders     int    `json:"total_orders"`    // Tổng số đơn hàng theo trạng thái
-    TotalRevenue    float64 `json:"total_revenue"`  // Tổng doanh thu theo trạng thái
+	Status       string  `json:"status"`        // Trạng thái đơn hàng
+	TotalOrders  int     `json:"total_orders"`  // Tổng số đơn hàng theo trạng thái
+	TotalRevenue float64 `json:"total_revenue"` // Tổng doanh thu theo trạng thái
 }

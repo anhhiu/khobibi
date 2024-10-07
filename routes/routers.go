@@ -4,6 +4,7 @@ import (
 	"bibi/auth"
 	"bibi/controllers"
 	"bibi/docs"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"                   // Swagger embed files
 	httpSwagger "github.com/swaggo/http-swagger" // Http Swagger middleware
@@ -16,10 +17,10 @@ func SetupRouter() *gin.Engine {
 		AllowAllOrigins: true, // Cho phép tất cả các nguồn gốc
 		// Hoặc bạn có thể chỉ định các nguồn gốc cụ thể:
 		// AllowOrigins: []string{"http://example.com"},
-		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
-		ExposeHeaders:    []string{"Content-Length"},
-		MaxAge:           12 * 60 * 60, // 12 giờ
+		AllowMethods:  []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:  []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders: []string{"Content-Length"},
+		MaxAge:        12 * 60 * 60, // 12 giờ
 	}
 	router.Use(cors.New(corsConfig))
 	docs.SwaggerInfo.BasePath = "/api"
@@ -82,7 +83,8 @@ func SetupRouter() *gin.Engine {
 	{
 		order.GET("/", controllers.GetAllOrder)
 		order.GET("/:order_id", controllers.GetOrderById)
-		order.POST("/", controllers.CreateOrder)
+		// order.POST("/", controllers.CreateOrder1)
+		order.POST("/", controllers.CreateOrder1)
 		order.PUT("/:order_id", controllers.UpdateOrderById)
 		order.DELETE("/:order_id", controllers.DeleteOrderById)
 	}
@@ -91,6 +93,15 @@ func SetupRouter() *gin.Engine {
 	{
 		orderdetail.GET("/", controllers.GetALLOrderDetail)
 		orderdetail.GET("/:order_detail_id", controllers.GetOrderDetailById)
+	}
+
+	student := router.Group("/api/student")
+	{
+		student.GET("/", controllers.GetAllStudent)
+		student.POST("/", controllers.CreateStudent)
+		student.PUT("/:student_id", controllers.UpdateStudent)
+		student.DELETE("/:student_id", controllers.DeleteStudent)
+		student.GET("/:student_id", controllers.GetStudentById)
 	}
 
 	return router

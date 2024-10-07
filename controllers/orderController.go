@@ -3,11 +3,13 @@ package controllers
 import (
 	"bibi/config"
 	"bibi/models"
+	"errors"
 	"net/http"
 	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // @Summary Get all orders
@@ -37,10 +39,11 @@ func GetAllOrder(c *gin.Context) {
 // @Tags orders
 // @Accept json
 // @Produce json
-// @Param order body object true "Orders data"
+// @Param order body models.Order true "Order data"
+// @Success 201 {object} models.Order
+// @Failure 400 {object} string "Invalid input"
 // @Router /order/ [post]
-
-func CreateOrder(c *gin.Context) {
+func CreateOrder1(c *gin.Context) {
 	// Khai báo cấu trúc đầu vào
 	var input struct {
 		CustomerID int       `json:"customer_id"`
@@ -139,7 +142,7 @@ func CreateOrder(c *gin.Context) {
 	}
 
 	// Trả về phản hồi
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusCreated, gin.H{
 		"message": "Order created successfully",
 		"order":   order,
 	})
@@ -154,6 +157,7 @@ func UpdateOrderById(c *gin.Context) {
 	var input struct {
 		CustomerID int       `json:"customer_id"`
 		OrderDate  time.Time `json:"order_date"`
+		Status     string    `json:"status"`
 		Products   []struct {
 			ProductID int `json:"product_id"`
 			Quantity  int `json:"quantity"`
@@ -176,6 +180,7 @@ func UpdateOrderById(c *gin.Context) {
 	// Cập nhật các trường lệnh
 	order.CustomerID = input.CustomerID
 	order.OrderDate = time.Now()
+	order.Status = input.Status
 
 	// cập nhật đơn hàng chi tiết
 	for _, p := range input.Products {
@@ -260,15 +265,50 @@ func DeleteOrderById(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Order deleted successfully"})
 }
 
+/*
 // @tags orders
 // @summary Get order by id
 // @param orders_id path int true "OrderID"
-// @router /order/{order_id} [get]
+// @Router /order/{order_id} [get]
 func GetOrderById(c *gin.Context) {
 	var order models.Order
 	if err := config.DB.Where("order_id = ?", c.Param("order_id")).First(&order).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "error not found"})
 		return
 	}
+	c.JSON(http.StatusOK, gin.H{"data": order})
+}
+*/
+
+// @Summary Get order by Id
+// @Tags orders
+// @Accept json
+// @Produce json
+// @Param order_id path int true "Order ID"
+// @Router /order/{order_id} [get]
+func GetOrderById(c *gin.Context) {
+	// Lấy order_id từ URL
+	orderID := c.Param("order_id")
+
+	// Chuyển đổi orderID sang kiểu số
+	id, err := strconv.ParseInt(orderID, 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid order ID"})
+		return
+	}
+
+	var order models.Order
+
+	// Tìm kiếm đơn hàng theo order_id
+	if err := config.DB.First(&order, id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"message": "Order not found"})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve order"})
+		}
+		return
+	}
+
+	// Trả về thông tin đơn hàng
 	c.JSON(http.StatusOK, gin.H{"data": order})
 }

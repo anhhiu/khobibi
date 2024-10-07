@@ -14,6 +14,22 @@ definitions:
       phone:
         type: string
     type: object
+  models.Order:
+    description: Order model Order data structure
+    properties:
+      customer:
+        $ref: '#/definitions/models.Customer'
+      customer_id:
+        type: integer
+      order_date:
+        type: string
+      order_id:
+        type: integer
+      status:
+        type: string
+      total_amount:
+        type: number
+    type: object
   models.Product:
     properties:
       brand:
@@ -38,6 +54,19 @@ definitions:
         $ref: '#/definitions/models.Supplier'
       supplier_id:
         type: integer
+    type: object
+  models.Students:
+    properties:
+      address:
+        type: string
+      age:
+        type: integer
+      class:
+        type: string
+      student_id:
+        type: integer
+      student_name:
+        type: string
     type: object
   models.Supplier:
     properties:
@@ -160,6 +189,30 @@ paths:
       summary: Get all orders
       tags:
       - orders
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Order data
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/models.Order'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Order'
+        "400":
+          description: Invalid input
+          schema:
+            type: string
+      summary: Create order
+      tags:
+      - orders
   /order/{order_id}:
     delete:
       parameters:
@@ -173,14 +226,18 @@ paths:
       tags:
       - orders
     get:
+      consumes:
+      - application/json
       parameters:
-      - description: OrderID
+      - description: Order ID
         in: path
-        name: orders_id
+        name: order_id
         required: true
         type: integer
+      produces:
+      - application/json
       responses: {}
-      summary: Get order by id
+      summary: Get order by Id
       tags:
       - orders
     put:
@@ -345,6 +402,64 @@ paths:
       summary: Thống kê doanh thu
       tags:
       - report
+  /student/:
+    get:
+      responses: {}
+      summary: get all students
+      tags:
+      - students
+    post:
+      parameters:
+      - description: student data
+        in: body
+        name: student
+        required: true
+        schema:
+          $ref: '#/definitions/models.Students'
+      responses: {}
+      summary: create student
+      tags:
+      - students
+  /student/{student_id}:
+    delete:
+      parameters:
+      - description: StudentID
+        in: path
+        name: student_id
+        required: true
+        type: integer
+      responses: {}
+      summary: delete student
+      tags:
+      - students
+    get:
+      parameters:
+      - description: StudentID
+        in: path
+        name: student_id
+        required: true
+        type: integer
+      responses: {}
+      summary: get student by id
+      tags:
+      - students
+    put:
+      parameters:
+      - description: StudentID
+        in: path
+        name: student_id
+        required: true
+        type: integer
+      - description: Student info
+        in: body
+        name: student
+        required: true
+        schema:
+          $ref: '#/definitions/models.Students'
+      responses: {}
+      summary: update student
+      tags:
+      - students
   /supplier/:
     get:
       consumes:

@@ -19,6 +19,7 @@ func main() {
 	config.DB.AutoMigrate(&models.Order{})
 	config.DB.AutoMigrate(&models.OrderDetail{})
 	config.DB.AutoMigrate(&models.Users{})
+	config.DB.AutoMigrate(&models.Students{})
 	fmt.Println("ánh xạ thành công")
 
 	router := routes.SetupRouter()
