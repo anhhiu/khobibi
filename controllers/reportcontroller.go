@@ -36,9 +36,9 @@ func GetInventoryReport(c *gin.Context) {
 		report.TotalValue += float64(product.Quantity) * product.Price
 
 		//  tồn kho thấp là nhỏ hơn hoặc bằng 5 sản phẩm
-		if product.Quantity <= 5 {
+	//	if product.Quantity <= 5 {
 			report.LowStockProducts = append(report.LowStockProducts, product)
-		}
+	//	}
 	}
 
 	c.JSON(http.StatusOK, report)
