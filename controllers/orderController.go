@@ -11,6 +11,25 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
+//docker-compose up --build
+/*
+{
+	"customer_id": 1,
+	"order_date": "2024-10-30T12:00:00Z",
+	"products": [
+	  {
+		"product_id": 101,
+		"quantity": 2,
+		"unit_price": 15.5
+	  },
+	  {
+		"product_id": 102,
+		"quantity": 1,
+		"unit_price": 30.0
+	  }
+	]
+  }
+*/
 
 // @Summary Get all orders
 // @Tags orders

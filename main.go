@@ -24,7 +24,7 @@ func main() {
 
 	router := routes.SetupRouter()
 
-	if err := router.Run(":8080"); err != nil {
+	if err := router.Run(":8985"); err != nil {
 		log.Fatalf("Không thể khởi chạy server: %v", err)
 	}
 	fmt.Println("routes ok")
